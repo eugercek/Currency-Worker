@@ -21,19 +21,18 @@ namespace Curr
             var res = from node in doc.Descendants("Currency")
                       select new Currency
                       {
-                          Unit = node.Element("Unit").Value,
+                          Unit = Int32.Parse(node.Element("Unit").Value),
                           Isim = node.Element("Isim").Value,
                           CurrencyName = node.Element("CurrencyName").Value,
-                          ForexBuying = node.Element("ForexBuying").Value,
-                          ForexSelling = node.Element("ForexSelling").Value,
-                          BanknoteBuying = node.Element("BanknoteBuying").Value,
-                          BanknoteSelling = node.Element("BanknoteSelling").Value,
-
+                          ForexBuying = float.Parse(node.Element("ForexBuying").Value),
+                          ForexSelling = float.Parse(node.Element("ForexSelling").Value),
+                          BanknoteBuying = float.Parse(node.Element("BanknoteBuying").Value),
+                          BanknoteSelling = float.Parse(node.Element("BanknoteSelling").Value)
                       };
 
             foreach (var obj in res)
             {
-                System.Console.WriteLine(value: obj);
+                System.Console.WriteLine(obj.ToString());
             }
         }
 
