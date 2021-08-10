@@ -2,7 +2,7 @@
 
 namespace Money
 {
-    public class Currency
+    public struct Currency
     {
         public string Unit;
         public string Isim;
