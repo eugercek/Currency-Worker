@@ -15,20 +15,21 @@ namespace Curr
 
         static void Main(string[] args)
         {
+            float floatParser(string str) => string.IsNullOrEmpty(str) ? 0 : float.Parse(str);
             DownloadXML();
             XDocument doc = XDocument.Load(fileName);
 
-            var res = from node in doc.Descendants("Currency")
-                      select new Currency
-                      {
-                          Unit = Int32.Parse(node.Element("Unit").Value),
-                          Isim = node.Element("Isim").Value,
-                          CurrencyName = node.Element("CurrencyName").Value,
-                          ForexBuying = float.Parse(node.Element("ForexBuying").Value),
-                          ForexSelling = float.Parse(node.Element("ForexSelling").Value),
-                          BanknoteBuying = float.Parse(node.Element("BanknoteBuying").Value),
-                          BanknoteSelling = float.Parse(node.Element("BanknoteSelling").Value)
-                      };
+            var res = (from node in doc.Descendants("Currency")
+                       select new Currency
+                       {
+                           Unit = Int32.Parse(node.Element("Unit").Value),
+                           Isim = node.Element("Isim").Value,
+                           CurrencyName = node.Element("CurrencyName").Value,
+                           ForexBuying = floatParser(node.Element("ForexBuying").Value),
+                           ForexSelling = floatParser(node.Element("ForexSelling").Value),
+                           BanknoteBuying = floatParser(node.Element("BanknoteBuying").Value),
+                           BanknoteSelling = floatParser(node.Element("BanknoteSelling").Value)
+                       }).ToArray();
 
             foreach (var obj in res)
             {
@@ -43,6 +44,7 @@ namespace Curr
                 client.DownloadFile(URL, fileName);
             }
         }
+
     }
 }
 
