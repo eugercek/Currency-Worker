@@ -33,18 +33,19 @@ namespace Curr
 
             printCurrencies(currencies);
 
-
             System.Console.Write("Enter an amount: ");
             decimal amount = System.Console.ReadLine().ParseOrDefault<decimal>();
 
             System.Console.Write("Enter from currency: ");
-            string fromCurrencyy = System.Console.ReadLine();
+            string fromCurrency = System.Console.ReadLine();
 
             System.Console.Write("Enter to currency: ");
             string toCurrency = System.Console.ReadLine();
 
-            System.Console.WriteLine($"{fromCurrencyy} -> {toCurrency}");
-            var result = amount * (currencies[fromCurrencyy].BanknoteBuying / currencies[toCurrency].BanknoteBuying);
+            System.Console.WriteLine($"{fromCurrency} -> {toCurrency}");
+
+            var result = amount * (currencies[fromCurrency].RealBuying / currencies[toCurrency].RealBuying);
+
             System.Console.WriteLine(result);
 
         }
@@ -60,8 +61,7 @@ namespace Curr
 
         static void printCurrencies(Dictionary<string, Currency> currencies)
         {
-            // Look at this https://stackoverflow.com/questions/13477689/find-number-of-decimal-places-in-decimal-value-regardless-of-culture/
-            int maxWidth = 
+            int maxWidth =
                 currencies
                 .Values
                 .OrderByDescending(c => c.BanknoteBuying)
