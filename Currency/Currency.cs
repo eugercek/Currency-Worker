@@ -2,15 +2,15 @@
 
 namespace Money
 {
-    public struct Currency
+    public class Currency
     {
         public int Unit;
         public string Isim;
         public string CurrencyName;
-        public float ForexBuying;
-        public float ForexSelling;
-        public float BanknoteBuying;
-        public float BanknoteSelling;
+        public decimal ForexBuying;
+        public decimal ForexSelling;
+        public decimal BanknoteBuying;
+        public decimal BanknoteSelling;
 
         public override string ToString()
         {

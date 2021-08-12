@@ -15,7 +15,7 @@ namespace Curr
 
         static void Main(string[] args)
         {
-            float floatParser(string str) => string.IsNullOrEmpty(str) ? 0 : float.Parse(str);
+            decimal decimalParse(string str) => string.IsNullOrEmpty(str) ? default(decimal) : decimal.Parse(str);
             DownloadXML();
             XDocument doc = XDocument.Load(fileName);
 
@@ -25,15 +25,15 @@ namespace Curr
                            Unit = Int32.Parse(node.Element("Unit").Value),
                            Isim = node.Element("Isim").Value,
                            CurrencyName = node.Element("CurrencyName").Value,
-                           ForexBuying = floatParser(node.Element("ForexBuying").Value),
-                           ForexSelling = floatParser(node.Element("ForexSelling").Value),
-                           BanknoteBuying = floatParser(node.Element("BanknoteBuying").Value),
-                           BanknoteSelling = floatParser(node.Element("BanknoteSelling").Value)
+                           ForexBuying = decimalParse(node.Element("ForexBuying").Value),
+                           ForexSelling = decimalParse(node.Element("ForexSelling").Value),
+                           BanknoteBuying = decimalParse(node.Element("BanknoteBuying").Value),
+                           BanknoteSelling = decimalParse(node.Element("BanknoteSelling").Value)
                        }).ToArray();
 
             foreach (var obj in res)
             {
-                System.Console.WriteLine(obj.ToString());
+                System.Console.WriteLine(obj);
             }
         }
 
@@ -42,6 +42,7 @@ namespace Curr
             using (var client = new WebClient())
             {
                 client.DownloadFile(URL, fileName);
+
             }
         }
 
