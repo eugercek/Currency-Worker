@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Xml;
 using System.Xml.Linq;
+using Extensions;
 using Money;
 
 namespace Curr
@@ -15,26 +16,20 @@ namespace Curr
 
         static void Main(string[] args)
         {
-            decimal decimalParse(string str) => string.IsNullOrEmpty(str) ? default(decimal) : decimal.Parse(str);
             DownloadXML();
             XDocument doc = XDocument.Load(fileName);
 
-            var res = (from node in doc.Descendants("Currency")
-                       select new Currency
-                       {
-                           Unit = Int32.Parse(node.Element("Unit").Value),
-                           Isim = node.Element("Isim").Value,
-                           CurrencyName = node.Element("CurrencyName").Value,
-                           ForexBuying = decimalParse(node.Element("ForexBuying").Value),
-                           ForexSelling = decimalParse(node.Element("ForexSelling").Value),
-                           BanknoteBuying = decimalParse(node.Element("BanknoteBuying").Value),
-                           BanknoteSelling = decimalParse(node.Element("BanknoteSelling").Value)
-                       }).ToArray();
-
-            foreach (var obj in res)
-            {
-                System.Console.WriteLine(obj);
-            }
+            var currencies = (from node in doc.Descendants("Currency")
+                              select new Currency
+                              {
+                                  Unit = node.Element("Unit").Value.ParseOrDefault<int>(),
+                                  Isim = node.Element("Isim").Value,
+                                  CurrencyName = node.Element("CurrencyName").Value,
+                                  ForexBuying = node.Element("ForexBuying").Value.ParseOrDefault<decimal>(),
+                                  ForexSelling = node.Element("ForexSelling").Value.ParseOrDefault<decimal>(),
+                                  BanknoteBuying = node.Element("BanknoteBuying").Value.ParseOrDefault<decimal>(),
+                                  BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
+                              }).ToDictionary(c => c.Isim, c => c);
         }
 
         static void DownloadXML()
