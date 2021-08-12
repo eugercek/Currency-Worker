@@ -44,7 +44,7 @@ namespace Curr
 
             System.Console.WriteLine($"{fromCurrency} -> {toCurrency}");
 
-            var result = amount * (currencies[fromCurrency].RealBuying / currencies[toCurrency].RealBuying);
+            var result = amount * (currencies[fromCurrency].BuyingPrice / currencies[toCurrency].BuyingPrice);
 
             System.Console.WriteLine(result);
 

@@ -2,7 +2,14 @@
 
 namespace Money
 {
-    public class Currency
+    public abstract class CurrencyBase
+    {
+        public abstract decimal BuyingPrice { get; }
+        public abstract decimal SellingPrice { get; }
+        public abstract string Name { get; }
+    }
+
+    public class Currency : CurrencyBase
     {
         public int Unit;
         public string Isim;
@@ -11,8 +18,10 @@ namespace Money
         public decimal ForexSelling;
         public decimal BanknoteBuying;
         public decimal BanknoteSelling;
-        public decimal RealBuying => ForexBuying / Unit;
-        public decimal RealSelling => ForexSelling / Unit;
+
+        public override decimal BuyingPrice => ForexBuying / Unit;
+        public override decimal SellingPrice => ForexSelling / Unit;
+        public override string Name => Isim;
 
         public override string ToString()
         {
