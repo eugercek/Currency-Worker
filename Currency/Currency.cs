@@ -14,10 +14,18 @@ namespace Money
 
         public override string ToString()
         {
-            const int boxWidth = 3;
-            return $"{Isim}\n" +
-            $"|{ForexBuying.ToString(),boxWidth}|{ForexSelling,boxWidth}|\n" +
-            $"|{BanknoteBuying.ToString(),boxWidth}|{BanknoteSelling,boxWidth}|\n";
+            return @$"
+            {Isim}
+            {ForexBuying}     {ForexSelling}";
+        }
+
+        public void DrawBoxes(int maxWidth)
+        {
+            string printOrPass(decimal value) => value == 0 ? "" : value.ToString();
+
+            Console.Write($"{Isim}\n" +
+            " | " + printOrPass(ForexBuying).PadRight(maxWidth) + " | " + printOrPass(ForexSelling).PadRight(maxWidth) + " |\n" +
+            " | " + printOrPass(ForexBuying).PadRight(maxWidth) + " | " + printOrPass(ForexSelling).PadRight(maxWidth) + " |\n");
         }
     }
 }

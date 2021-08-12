@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Xml;
@@ -22,13 +23,16 @@ namespace Curr
                               select new Currency
                               {
                                   Unit = node.Element("Unit").Value.ParseOrDefault<int>(),
-                                  Isim = node.Element("Isim").Value,
-                                  CurrencyName = node.Element("CurrencyName").Value,
+                                  Isim = node.Element("Isim").Value.Trim(),
+                                  CurrencyName = node.Element("CurrencyName").Value.Trim(),
                                   ForexBuying = node.Element("ForexBuying").Value.ParseOrDefault<decimal>(),
                                   ForexSelling = node.Element("ForexSelling").Value.ParseOrDefault<decimal>(),
                                   BanknoteBuying = node.Element("BanknoteBuying").Value.ParseOrDefault<decimal>(),
                                   BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
                               }).ToDictionary(c => c.Isim, c => c);
+
+            printCurrencies(currencies);
+
 
             System.Console.Write("Enter an amount: ");
             decimal amount = System.Console.ReadLine().ParseOrDefault<decimal>();
@@ -42,6 +46,7 @@ namespace Curr
             System.Console.WriteLine($"{fromCurrencyy} -> {toCurrency}");
             var result = amount * (currencies[fromCurrencyy].BanknoteBuying / currencies[toCurrency].BanknoteBuying);
             System.Console.WriteLine(result);
+
         }
 
         static void DownloadXML()
@@ -50,6 +55,22 @@ namespace Curr
             {
                 client.DownloadFile(URL, fileName);
             }
+        }
+
+
+        static void printCurrencies(Dictionary<string, Currency> currencies)
+        {
+            // Look at this https://stackoverflow.com/questions/13477689/find-number-of-decimal-places-in-decimal-value-regardless-of-culture/
+            int maxWidth = 
+                currencies
+                .Values
+                .OrderByDescending(c => c.BanknoteBuying)
+                .First().BanknoteBuying
+                .ToString()
+                .Length;
+
+            foreach (var c in currencies.Values)
+                c.DrawBoxes(maxWidth);
         }
 
     }
