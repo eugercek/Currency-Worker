@@ -10,7 +10,6 @@ namespace Curr
 {
     class Program
     {
-
         static readonly string URL = "https://www.tcmb.gov.tr/kurlar/today.xml";
         static readonly string fileName = "today.xml";
 
@@ -30,6 +29,19 @@ namespace Curr
                                   BanknoteBuying = node.Element("BanknoteBuying").Value.ParseOrDefault<decimal>(),
                                   BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
                               }).ToDictionary(c => c.Isim, c => c);
+
+            System.Console.Write("Enter an amount: ");
+            decimal amount = System.Console.ReadLine().ParseOrDefault<decimal>();
+
+            System.Console.Write("Enter from currency: ");
+            string fromCurrencyy = System.Console.ReadLine();
+
+            System.Console.Write("Enter to currency: ");
+            string toCurrency = System.Console.ReadLine();
+
+            System.Console.WriteLine($"{fromCurrencyy} -> {toCurrency}");
+            var result = amount * (currencies[fromCurrencyy].BanknoteBuying / currencies[toCurrency].BanknoteBuying);
+            System.Console.WriteLine(result);
         }
 
         static void DownloadXML()
@@ -37,7 +49,6 @@ namespace Curr
             using (var client = new WebClient())
             {
                 client.DownloadFile(URL, fileName);
-
             }
         }
 
