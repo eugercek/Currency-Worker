@@ -2,11 +2,38 @@
 
 namespace Money
 {
-    public abstract class CurrencyBase
+    public abstract class CurrencyBase : IComparable
     {
         public abstract decimal BuyingPrice { get; }
         public abstract decimal SellingPrice { get; }
         public abstract string Name { get; }
+
+        public int CompareTo(object other)
+        {
+            // https://stackoverflow.com/questions/2742276/how-do-i-check-if-a-type-is-a-subtype-or-the-type-of-an-object
+            bool isSameOrSubclass(Type potentialBase, Type potentialDescendant)
+            {
+                return potentialDescendant.IsSubclassOf(potentialBase)
+                       || potentialDescendant == potentialBase;
+            }
+
+            if (isSameOrSubclass(typeof(CurrencyBase), other.GetType()))
+            {
+                var res = this.BuyingPrice.CompareTo(((CurrencyBase)other).BuyingPrice);
+
+                if (res == 0)
+                {
+                    return SellingPrice.CompareTo(((CurrencyBase)other).SellingPrice);
+                }
+                else
+                {
+                    return res;
+                }
+            }
+            else
+                throw new ArgumentException("Object is not a Temperature");
+        }
+
     }
 
     public class Currency : CurrencyBase
