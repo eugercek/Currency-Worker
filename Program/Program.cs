@@ -16,7 +16,10 @@ namespace Curr
 
         static void Main(string[] args)
         {
+            // Don't wait the download time
+#if !DEBUG
             DownloadXML();
+#endif
             var doc = XElement.Load(fileName);
 
             var currencies = (from node in doc.Descendants("Currency")
@@ -34,8 +37,11 @@ namespace Curr
             var table = CreateTable();
             LoadTable(table, currencies.Select(d => d.Value).ToList());
 
+            // Use inspector
+#if !DEBUG
             // printCurrencies(currencies);
             PrintDataTable(table);
+#endif
 
             System.Console.Write("Enter an amount: ");
             decimal amount = System.Console.ReadLine().ParseOrDefault<decimal>();
