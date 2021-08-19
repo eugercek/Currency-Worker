@@ -2,6 +2,9 @@
 
 namespace Money
 {
+    /// <summary>
+    /// All currencies that parsed, needs to have this simple 3 property in order to be usable.
+    /// </summary>
     public abstract class CurrencyBase : IComparable
     {
         public abstract decimal BuyingPrice { get; }
@@ -36,6 +39,10 @@ namespace Money
 
     }
 
+    /// <summary>
+    /// Representation of the https://www.tcmb.gov.tr/kurlar/today.xml.
+    /// Field's name are same with the respect of the C#'s conventions.
+    /// </summary>
     public class Currency : CurrencyBase
     {
         public int Unit;
@@ -50,6 +57,10 @@ namespace Money
         public override decimal SellingPrice => ForexSelling / Unit;
         public override string Name => Isim;
 
+        /// <summary>
+        /// Returns simple representation of the object.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return @$"
@@ -57,6 +68,10 @@ namespace Money
             {ForexBuying}     {ForexSelling}";
         }
 
+        /// <summary>
+        /// Returns formatted, pretty string for directly output to command line.
+        /// </summary>
+        /// <param name="maxWidth"></param>
         public void DrawBoxes(int maxWidth)
         {
             string printOrPass(decimal value) => value == 0 ? "" : value.ToString();
