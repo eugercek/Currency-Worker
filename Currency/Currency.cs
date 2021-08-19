@@ -31,7 +31,7 @@ namespace Money
                 }
             }
             else
-                throw new ArgumentException("Object is not a Temperature");
+                throw new ArgumentException("Object is not Currency and it's not derived from Currency.");
         }
 
     }
