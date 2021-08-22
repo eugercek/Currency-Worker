@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Money
 {
@@ -7,9 +10,9 @@ namespace Money
     /// </summary>
     public abstract class CurrencyBase : IComparable
     {
-        public abstract decimal BuyingPrice { get; }
-        public abstract decimal SellingPrice { get; }
-        public abstract string Name { get; }
+        public abstract decimal BuyingPrice { get; set; }
+        public abstract decimal SellingPrice { get; set; }
+        public abstract string Name { get; set; }
 
         public int CompareTo(object other)
         {
@@ -43,8 +46,41 @@ namespace Money
     /// Representation of the https://www.tcmb.gov.tr/kurlar/today.xml.
     /// Field's name are same with the respect of the C#'s conventions.
     /// </summary>
+
     public class Currency : CurrencyBase
+
     {
+        public int CurrencyId { get; set; }
+        public override decimal BuyingPrice
+        {
+            get
+            {
+                return ForexBuying / Unit;
+            }
+            set { }
+        }
+        public override decimal SellingPrice
+        {
+            get
+            {
+
+                return ForexSelling / Unit;
+            }
+            set { }
+        }
+        public override string Name
+        {
+            get
+            {
+                return Isim;
+            }
+            set
+            {
+
+            }
+        }
+
+        [NotMapped]
         public int Unit;
         public string Isim;
         public string CurrencyName;

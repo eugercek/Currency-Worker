@@ -12,7 +12,7 @@ namespace Curr
     class Program
     {
         static readonly string URL = "https://www.tcmb.gov.tr/kurlar/today.xml";
-        static readonly string fileName = "today.xml";
+        static readonly string fileName = "/tmp/today.xml";
 
         static void Main(string[] args)
         {
@@ -29,11 +29,17 @@ namespace Curr
                                   ForexSelling = node.Element("ForexSelling").Value.ParseOrDefault<decimal>(),
                                   BanknoteBuying = node.Element("BanknoteBuying").Value.ParseOrDefault<decimal>(),
                                   BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
-                              }).ToDictionary(c => c.Isim, c => c);
+                              }).ToList();
 
-            var table = CreateTable();
-            LoadTable(table, currencies.Select(d => d.Value).ToList());
+            var db = new CurrenciesContext
+            {
+                DBName = "Currencies.db",
+            };
+            db.Database.EnsureCreated();
 
+            db.Currencies.AddRange(currencies);
+
+            db.SaveChanges();
         }
 
         static void DownloadXML()
