@@ -52,33 +52,16 @@ namespace Money
         public decimal ForexSelling;
         public decimal BanknoteBuying;
         public decimal BanknoteSelling;
+    }
+    public class CurrenciesContext : DbContext
+    {
+        public string DBName { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
-        public override decimal BuyingPrice => ForexBuying / Unit;
-        public override decimal SellingPrice => ForexSelling / Unit;
-        public override string Name => Isim;
-
-        /// <summary>
-        /// Returns simple representation of the object.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            return @$"
-            {Isim}
-            {ForexBuying}     {ForexSelling}";
+            optionsBuilder.UseSqlite($"Filename=./{DBName}");
         }
 
-        /// <summary>
-        /// Returns formatted, pretty string for directly output to command line.
-        /// </summary>
-        /// <param name="maxWidth"></param>
-        public void DrawBoxes(int maxWidth)
-        {
-            string printOrPass(decimal value) => value == 0 ? "" : value.ToString();
-
-            Console.Write($"{Isim}\n\n" +
-            " | " + printOrPass(ForexBuying).PadRight(maxWidth) + "|" + printOrPass(ForexSelling).PadRight(maxWidth) + " |\n" +
-            " | " + printOrPass(ForexBuying).PadRight(maxWidth) + "|" + printOrPass(ForexSelling).PadRight(maxWidth) + " |\n\n");
-        }
     }
 }

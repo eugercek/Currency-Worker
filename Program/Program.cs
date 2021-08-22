@@ -43,61 +43,7 @@ namespace Curr
                 client.DownloadFile(URL, fileName);
             }
         }
-
-
-        static void printCurrencies(Dictionary<string, Currency> currencies)
-        {
-            int maxWidth =
-                currencies
-                .Values
-                .OrderByDescending(c => c.BanknoteBuying)
-                .First().BanknoteBuying
-                .ToString()
-                .Length;
-
-            foreach (var c in currencies.Values)
-                c.DrawBoxes(maxWidth);
-        }
-
-        static DataTable CreateTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("Unit", typeof(string));
-            table.Columns.Add("İsim", typeof(string));
-            table.Columns.Add("CurrencyName", typeof(string));
-            table.Columns.Add("ForexBuying", typeof(decimal));
-            table.Columns.Add("ForexSelling", typeof(decimal));
-            table.Columns.Add("BanknoteBuying", typeof(decimal));
-            table.Columns.Add("BanknoteSelling", typeof(decimal));
-            return table;
-        }
-
-        static void LoadTable(DataTable table, List<Currency> currencies)
-        {
-            foreach (var c in currencies)
-            {
-                table.Rows.Add(
-                    c.Unit,
-                    c.Isim,
-                    c.CurrencyName,
-                    c.ForexBuying,
-                    c.ForexSelling,
-                    c.BanknoteBuying,
-                    c.BanknoteSelling);
-            }
-        }
-
-        static void PrintDataTable(DataTable table)
-        {
-            foreach (DataRow dataRow in table.Rows)
-            {
-                foreach (var item in dataRow.ItemArray)
-                {
-                    Console.Write($"{item}\t\t");
-                }
-                System.Console.WriteLine("");
-            }
-        }
     }
+
 }
 
