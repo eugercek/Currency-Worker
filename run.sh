@@ -1,3 +1,2 @@
-sudo systemctl stop currency-downloader.timer
+sudo cp /home/umut/src/staj/Currency/curdow.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl start currency-downloader.timer

@@ -96,7 +96,7 @@ namespace Money
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename=./{DBName}");
+            optionsBuilder.UseSqlite($"Filename={DBName}");
         }
 
     }

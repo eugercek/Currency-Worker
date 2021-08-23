@@ -1,0 +1,15 @@
+[Unit]
+Description=Download XML from tcmb and store it in the database
+
+[Service]
+Type=notify
+WorkingDirectory=/srv/curdow
+ExecStart=/srv/curdow/Program
+SyslogIdentifier=curdow
+
+User=umut
+
+Environment=DOTNET_ROOT=/usr/lib64/dotnet
+
+[Install]
+WantedBy=multi-user.target
