@@ -1,0 +1,33 @@
+* Setup for Fedora
+Ensure that machine has =.local/bin=
+
+#+begin_src sh
+mkdir -p ~/.local/bin
+#+end_src
+
+Publish the program
+
+#+begin_src sh
+dotnet publish -c Release -o ~/.local/bin
+#+end_src
+
+Copy systemd unit file
+
+#+begin_src sh
+sudo cp ./currency-downloader.service /etc/systemd/system/
+#+end_src
+
+
+Reload all unit files
+#+begin_src sh
+sudo systemd daemon-reload
+#+end_src
+
+Disable selinux just for test
+#+begin_src sh
+sudo setenforce 0
+#+end_src
+
+#+begin_src sh
+sudo systemctl start currency-downloader
+#+end_src
