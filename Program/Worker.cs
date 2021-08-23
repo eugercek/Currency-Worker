@@ -31,6 +31,7 @@ namespace Program
             {
                 client.DownloadFile(URL, fileName);
             }
+            _logger.LogInformation("Downloaded and wrote today.xml file");
             var doc = XElement.Load(fileName);
 
             var currencies = (from node in doc.Descendants("Currency")
@@ -54,6 +55,8 @@ namespace Program
             db.Currencies.AddRange(currencies);
 
             db.SaveChanges();
+
+            _logger.LogInformation("Saved Databse");
         }
     }
 }
