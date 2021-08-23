@@ -2,6 +2,7 @@
 Description=Download XML from tcmb and store it in the database
 
 [Service]
+Type=simple
 ExecStart=/home/umut/.loca/bin/currency-downloader
 SyslogIdentifier=currency-downloader
 
@@ -12,5 +13,5 @@ RestartSec=5
 
 Environment=DOTNET_ROOT=/usr/lib64/dotnet
 
-[Install]
-WantedBy=multi-user.target
+# [Install]
+# WantedBy=multi-user.target

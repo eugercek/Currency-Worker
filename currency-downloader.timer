@@ -1,0 +1,6 @@
+[Unit]
+Description=Download XML from tcmb and store it in the database
+
+[Timer]
+OnCalendar=*-*-* 15:35:00
+Persistent=true

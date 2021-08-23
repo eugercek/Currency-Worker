@@ -1,4 +1,7 @@
 * Setup for Fedora
+:PROPERTIES:
+:header-args:sh: :tangle setup.sh :shebang "#!/bin/bash"
+:END:
 Ensure that machine has =.local/bin=
 
 #+begin_src sh
@@ -8,19 +11,23 @@ mkdir -p ~/.local/bin
 Publish the program
 
 #+begin_src sh
+cd ./Program
 dotnet publish -c Release -o ~/.local/bin
+cd ..
 #+end_src
 
-Copy systemd unit file
+Copy systemd unit and timer files.
 
 #+begin_src sh
 sudo cp ./currency-downloader.service /etc/systemd/system/
+sudo cp ./currency-downloader.timer /etc/systemd/system/
 #+end_src
 
 
 Reload all unit files
+
 #+begin_src sh
-sudo systemd daemon-reload
+sudo systemctl daemon-reload
 #+end_src
 
 Disable selinux just for test
