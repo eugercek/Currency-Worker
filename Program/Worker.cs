@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -15,6 +16,8 @@ namespace Program
 {
     public class Worker : BackgroundService
     {
+        readonly string fileName = "/tmp/today.xml";
+
         private readonly ILogger<Worker> _logger;
 
         public Worker(ILogger<Worker> logger)
@@ -22,16 +25,30 @@ namespace Program
             _logger = logger;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+
+        public override Task StartAsync(CancellationToken cancellationToken)
         {
             string URL = "https://www.tcmb.gov.tr/kurlar/today.xml";
-            string fileName = "/tmp/today.xml";
-
             using (var client = new WebClient())
             {
                 client.DownloadFile(URL, fileName);
             }
             _logger.LogInformation("Downloaded and wrote today.xml file");
+
+            return Task.CompletedTask;
+
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            File.Copy(fileName, "/tmp/old.xml");
+            File.Delete(fileName);
+            return Task.CompletedTask;
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+
             var doc = XElement.Load(fileName);
 
             var currencies = (from node in doc.Descendants("Currency")

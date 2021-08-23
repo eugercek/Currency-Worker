@@ -36,5 +36,5 @@ sudo setenforce 0
 #+end_src
 
 #+begin_src sh
-sudo systemctl start currency-downloader
+sudo systemctl start currency-downloader.timer
 #+end_src

@@ -12,4 +12,4 @@ sudo systemctl daemon-reload
 
 sudo setenforce 0
 
-sudo systemctl start currency-downloader
+sudo systemctl start currency-downloader.timer
