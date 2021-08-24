@@ -1,0 +1,7 @@
+[Unit]
+Description=Run curdow service periodically
+
+[Timer]
+OnCalendar=*-*-* 15:35:00
+Persistent=true
+Unit=curdow.service
