@@ -26,12 +26,14 @@ namespace Program
         {
             string URL = "https://www.tcmb.gov.tr/kurlar/today.xml";
             string fileName = "/tmp/today.xml";
+            // string dbName = "./Currencies.db";
+            string dbName = "/home/umut/src/Currencies.db";
 
             using (var client = new WebClient())
             {
                 client.DownloadFile(URL, fileName);
             }
-            _logger.LogInformation("Downloaded and wrote today.xml file");
+            _logger.LogInformation($"Downloaded({fileName}) and wrote file({dbName})");
             var doc = XElement.Load(fileName);
 
             var currencies = (from node in doc.Descendants("Currency")
@@ -48,16 +50,16 @@ namespace Program
 
             var db = new CurrenciesContext
             {
-                DBName = "./Currencies.db",
+                DBName = dbName,
             };
+
             db.Database.EnsureCreated();
 
             db.Currencies.AddRange(currencies);
 
             db.SaveChanges();
 
-            _logger.LogInformation("Saved Databse");
-            return;
+            _logger.LogInformation($"Saved Databse({dbName})");
         }
     }
 }
