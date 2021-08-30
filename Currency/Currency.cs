@@ -55,7 +55,14 @@ namespace Money
         {
             get
             {
-                return ForexBuying / Unit;
+                if (Unit == 0)
+                {
+                    return ForexBuying;
+                }
+                else
+                {
+                    return ForexBuying / Unit;
+                }
             }
             set { }
         }
@@ -63,8 +70,14 @@ namespace Money
         {
             get
             {
-
-                return ForexSelling / Unit;
+                if (Unit == 0)
+                {
+                    return ForexSelling;
+                }
+                else
+                {
+                    return ForexSelling / Unit;
+                }
             }
             set { }
         }
