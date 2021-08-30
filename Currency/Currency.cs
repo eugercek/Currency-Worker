@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Money
@@ -13,6 +14,7 @@ namespace Money
         public abstract decimal BuyingPrice { get; set; }
         public abstract decimal SellingPrice { get; set; }
         public abstract string Name { get; set; }
+        public abstract DateTime Date { get; set; }
 
         public int CompareTo(object other)
         {
@@ -46,9 +48,7 @@ namespace Money
     /// Representation of the https://www.tcmb.gov.tr/kurlar/today.xml.
     /// Field's name are same with the respect of the C#'s conventions.
     /// </summary>
-
     public class Currency : CurrencyBase
-
     {
         public int CurrencyId { get; set; }
         public override decimal BuyingPrice
@@ -80,6 +80,18 @@ namespace Money
             }
         }
 
+        public override DateTime Date
+        {
+            get
+            {
+                return DateTime.Today;
+            }
+            set
+            {
+
+            }
+        }
+
         [NotMapped]
         public int Unit;
         public string Isim;
@@ -89,6 +101,7 @@ namespace Money
         public decimal BanknoteBuying;
         public decimal BanknoteSelling;
     }
+
     public class CurrenciesContext : DbContext
     {
         public string DBName { get; set; }
