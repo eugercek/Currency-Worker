@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Extensions
+namespace CurrencyWorker.Extensions
 {
     public static class StringParseOrDefault
     {

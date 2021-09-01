@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Systemd;
 
-namespace Program
+namespace CurrencyWorker
 {
-    public class Program
+    public class CurrencyWorker
     {
         public static void Main(string[] args)
         {

@@ -6,12 +6,12 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Extensions;
+using CurrencyWorker.Data.Model;
+using CurrencyWorker.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Money;
 
-namespace Program
+namespace CurrencyWorker
 {
     public class Worker : BackgroundService
     {

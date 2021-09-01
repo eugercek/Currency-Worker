@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Program/bin/Debug/net5.0/Program.dll",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/CurrencyWorker.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Program",
+            "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

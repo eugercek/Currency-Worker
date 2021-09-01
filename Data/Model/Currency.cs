@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore;
 
-namespace Money
+namespace CurrencyWorker.Data.Model
 {
     /// <summary>
     /// All currencies that parsed, needs to have this simple 3 property in order to be usable.
