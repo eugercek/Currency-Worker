@@ -122,7 +122,7 @@ namespace CurrencyWorker.Data.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={DBName}");
+            optionsBuilder.UseSqlite(DBName);
         }
 
     }

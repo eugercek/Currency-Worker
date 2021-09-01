@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using CurrencyWorker.Data.Model;
 using CurrencyWorker.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -16,23 +17,25 @@ namespace CurrencyWorker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        private readonly IConfiguration _configuration;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            string URL = "https://www.tcmb.gov.tr/kurlar/today.xml";
-            string fileName = "/tmp/today.xml";
-            // string dbName = "./Currencies.db";
-            string dbName = "/home/umut/src/Currencies.db";
+            string URL = _configuration["ParseURL"];
+            string fileName = _configuration["TemporaryFile"];
+            string dbName = _configuration.GetConnectionString("SQLite");
 
             using (var client = new WebClient())
             {
                 client.DownloadFile(URL, fileName);
             }
+
             _logger.LogInformation($"Downloaded({fileName}) and wrote file({dbName})");
             var doc = XElement.Load(fileName);
 
