@@ -37,11 +37,13 @@ namespace CurrencyWorker
             }
 
             _logger.LogInformation($"Downloaded({fileName}) and wrote file({dbName})");
-            var doc = XElement.Load(fileName);
+
+            XElement doc = XElement.Load(fileName);
 
             var currencies = (from node in doc.Descendants("Currency")
                               select new Currency
                               {
+                                  Code = node.Attribute("CurrencyCode").Value,
                                   Unit = node.Element("Unit").Value.ParseOrDefault<int>(),
                                   Isim = node.Element("Isim").Value.Trim(),
                                   CurrencyName = node.Element("CurrencyName").Value.Trim(),
@@ -51,9 +53,9 @@ namespace CurrencyWorker
                                   BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
                               }).ToList();
 
-            var db = new CurrenciesContext
+            var db = new CurrenyContext
             {
-                DBName = dbName,
+                ConnectionString = dbName,
             };
 
             db.Database.EnsureCreated();
