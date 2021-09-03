@@ -48,7 +48,7 @@ namespace CurrencyWorker.Data.Model
         {
             get
             {
-                return Isim;
+                return CurrencyName;
             }
             set
             {

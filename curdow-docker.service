@@ -1,0 +1,13 @@
+[Unit]
+Description=Download XML from tcmb and store it in the database(docker container)
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/bin/docker run --rm --name %n \
+                          -p 80:80 \
+                          -v /home/umut/src/Currencies.db:/db/Currencies.db:Z \
+                          eugercek/currency-worker
+
+[Install]
+WantedBy=multi-user.target

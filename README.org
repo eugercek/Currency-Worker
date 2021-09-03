@@ -1,5 +1,5 @@
-* Setup for fedora
+* Docker
 #+begin_src sh
-./setup.sh
-./run.sh
+docker build -t eugercek/currency-worker .
+docker run -p 80:80 -v /home/umut/src/Currencies.db:/db/Currencies.db:Z eugercek/currency-worker
 #+end_src
