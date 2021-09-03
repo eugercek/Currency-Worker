@@ -18,11 +18,13 @@ namespace CurrencyWorker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IHostApplicationLifetime _life;
 
-        public Worker(ILogger<Worker> logger, IConfiguration configuration)
+        public Worker(ILogger<Worker> logger, IConfiguration configuration, IHostApplicationLifetime hostApplicationLifetime)
         {
             _logger = logger;
             _configuration = configuration;
+            _life = hostApplicationLifetime;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -65,6 +67,7 @@ namespace CurrencyWorker
             db.SaveChanges();
 
             _logger.LogInformation($"Saved Databse({dbName})");
+            _life.StopApplication();
         }
     }
 }
