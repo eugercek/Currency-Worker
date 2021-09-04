@@ -32,7 +32,6 @@ namespace CurrencyWorker
         {
             string URL = _configuration["ParseURL"];
             string fileName = _configuration["TemporaryFile"];
-            string dbName = _configuration.GetConnectionString("SQLite");
 
             using (var client = new WebClient())
             {
