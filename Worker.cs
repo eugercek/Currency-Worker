@@ -61,7 +61,7 @@ namespace CurrencyWorker
 
             _context.Currencies.AddRange(currencies);
 
-            // _context.SaveChanges();
+            _context.SaveChanges();
 
             _logger.LogInformation($"Saved Database");
             _life.StopApplication();

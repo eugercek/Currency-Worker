@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using CurrencyWorker.Data.Model;
+using CurrencyWorker.Services;
+using CurrencyWorker.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Systemd;
@@ -23,6 +26,7 @@ namespace CurrencyWorker
                 {
                     services.AddDbContext<CurrencyContext>();
                     services.AddHostedService<Worker>();
+                    services.AddScoped<IFetchData<XElement>, TcmbFetchData>();
                 });
     }
 }
