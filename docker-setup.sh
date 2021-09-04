@@ -1,4 +1,5 @@
-# sudo setenforce 0
+#!/bin/bash
+sudo setenforce 0
 sudo systemctl stop curdow-docker.timer
 sudo systemctl stop curdow-docker.service
 sudo cp ./curdow-docker.service /etc/systemd/system/
