@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using CurrencyWorker.Data.Model;
 using CurrencyWorker.Extensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -20,12 +19,17 @@ namespace CurrencyWorker
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration _configuration;
         private readonly IHostApplicationLifetime _life;
+        private readonly CurrencyContext _context;
 
-        public Worker(ILogger<Worker> logger, IConfiguration configuration, IHostApplicationLifetime hostApplicationLifetime)
+        public Worker(ILogger<Worker> logger,
+            IConfiguration configuration,
+            IHostApplicationLifetime hostApplicationLifetime,
+            IServiceProvider serviceProvider)
         {
             _logger = logger;
             _configuration = configuration;
             _life = hostApplicationLifetime;
+            _context = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<CurrencyContext>();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -38,7 +42,7 @@ namespace CurrencyWorker
                 client.DownloadFile(URL, fileName);
             }
 
-            _logger.LogInformation($"Downloaded({fileName}) and wrote file({dbName})");
+            _logger.LogInformation($"Downloaded({fileName}) and wrote file");
 
             XElement doc = XElement.Load(fileName);
 
@@ -55,18 +59,11 @@ namespace CurrencyWorker
                                   BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
                               }).ToList();
 
-            var db = new CurrencyContext
-            {
-                ConnectionString = dbName,
-            };
+            _context.Currencies.AddRange(currencies);
 
-            db.Database.EnsureCreated();
+            // _context.SaveChanges();
 
-            db.Currencies.AddRange(currencies);
-
-            db.SaveChanges();
-
-            _logger.LogInformation($"Saved Databse({dbName})");
+            _logger.LogInformation($"Saved Database");
             _life.StopApplication();
         }
     }

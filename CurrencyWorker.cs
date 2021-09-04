@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CurrencyWorker.Data.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Systemd;
@@ -20,6 +21,7 @@ namespace CurrencyWorker
                 .UseSystemd()
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddDbContext<CurrencyContext>();
                     services.AddHostedService<Worker>();
                 });
     }

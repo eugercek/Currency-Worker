@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CurrencyWorker.Data.Migrations
 {
@@ -11,13 +12,13 @@ namespace CurrencyWorker.Data.Migrations
                 name: "Currencies",
                 columns: table => new
                 {
-                    CurrencyId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Code = table.Column<string>(type: "TEXT", nullable: true),
-                    BuyingPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    SellingPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CurrencyId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Code = table.Column<string>(type: "text", nullable: true),
+                    BuyingPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    SellingPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
