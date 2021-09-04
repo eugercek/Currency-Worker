@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using CurrencyWorker.Data.Model;
 using CurrencyWorker.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -55,7 +56,7 @@ namespace CurrencyWorker
                                   BanknoteSelling = node.Element("BanknoteSelling").Value.ParseOrDefault<decimal>(),
                               }).ToList();
 
-            var db = new CurrenyContext
+            var db = new CurrencyContext
             {
                 ConnectionString = dbName,
             };
