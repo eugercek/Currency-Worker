@@ -9,10 +9,12 @@ services:
     container_name: currency-postgres
     hostname: cur-db
     image: postgres
-    # volumes:
-    #   - ${HOME}/db/:/var/lib/postgresql/data:Z
+    volumes:
+      - ${HOME}/db/:/var/lib/postgresql/data:Z
     environment:
       - POSTGRES_PASSWORD=pass
+    ports:
+      - 54321:5432
     restart: unless-stopped
     networks:
       - currency-worker-dev
