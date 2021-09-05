@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using CurrencyWorker.Data.Model;
 using CurrencyWorker.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +35,7 @@ namespace CurrencyWorker
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _context.Database.Migrate();
             string URL = _configuration["ParseURL"];
             string fileName = _configuration["TemporaryFile"];
 

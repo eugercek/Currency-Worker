@@ -1,0 +1,30 @@
+version: "3.4"
+
+networks:
+  currency-worker-dev:
+    driver: bridge
+
+services:
+  currency-postgres:
+    container_name: currency-postgres
+    hostname: cur-db
+    image: postgres
+    # volumes:
+    #   - ${HOME}/db/:/var/lib/postgresql/data:Z
+    environment:
+      - POSTGRES_PASSWORD=pass
+    restart: unless-stopped
+    networks:
+      - currency-worker-dev
+
+  currency-worker:
+    container_name: currency-worker
+    hostname: cur-work
+    image: eugercek/currency-worker
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - currency-postgres
+    networks:
+      - currency-worker-dev
