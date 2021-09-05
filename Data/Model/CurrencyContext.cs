@@ -18,7 +18,6 @@ namespace CurrencyWorker.Data.Model
         {
             // optionsBuilder.UseSqlite(_configuration.GetConnectionString("SQLite"));
             optionsBuilder.UseNpgsql(_configuration.GetConnectionString("Postgres"));
-            // optionsBuilder.UseSqlite("Filename=/home/umut/src/Currencies.db");
         }
 
     }

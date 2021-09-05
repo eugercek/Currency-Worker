@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CurrencyWorker.Data.Model
@@ -12,6 +13,7 @@ namespace CurrencyWorker.Data.Model
     {
         public int CurrencyId { get; set; }
 
+        [MaxLength(3)]
         public string Code { get; set; }
 
         public override decimal BuyingPrice
@@ -29,6 +31,7 @@ namespace CurrencyWorker.Data.Model
             }
             set { }
         }
+
         public override decimal SellingPrice
         {
             get
@@ -44,24 +47,20 @@ namespace CurrencyWorker.Data.Model
             }
             set { }
         }
+
         public override string Name
         {
-            get
-            {
-                return CurrencyName;
-            }
+            get => CurrencyName;
             set
             {
 
             }
         }
 
+        [Column(TypeName = "date")]
         public override DateTime Date
         {
-            get
-            {
-                return DateTime.Today;
-            }
+            get => DateTime.Today;
             set
             {
 
