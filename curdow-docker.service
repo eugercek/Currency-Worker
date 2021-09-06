@@ -4,10 +4,8 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/bin/docker run --rm --name %n \
-                          -p 80:80 \
-                          -v /home/umut/src/Currencies.db:/db/Currencies.db:Z \
-                          eugercek/currency-worker
+# Change HERE !!!
+ExecStart=/usr/bin/docker-compose -f /home/umut/src/staj/Currency/docker-compose.yml up --abort-on-container-exit
 
 [Install]
 WantedBy=multi-user.target

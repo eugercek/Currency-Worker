@@ -5,5 +5,4 @@ sudo mkdir -p /srv/curdow
 sudo rm -rf /srv/curdow/*
 sudo chown umut /srv/curdow
 sudo systemctl stop curdow.timer
-cd /home/umut/src/staj/Currency/Program
 dotnet publish -c Release -o /srv/curdow

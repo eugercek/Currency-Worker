@@ -3,7 +3,8 @@ Description=Run curdow (Docker container) service periodically
 Requires=docker.service
 
 [Timer]
-OnCalendar=*-*-* 15:35:00
+# TCMB Publishes at 15:30:00
+OnCalendar=*-*-* 15:40:00
 Persistent=true
 Unit=curdow-docker.service
 

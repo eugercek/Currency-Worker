@@ -10,7 +10,7 @@ services:
     hostname: cur-db
     image: postgres
     volumes:
-      - ${HOME}/db/:/var/lib/postgresql/data:Z
+      - /home/umut/db/:/var/lib/postgresql/data:Z
     environment:
       - POSTGRES_PASSWORD=pass
     ports:
