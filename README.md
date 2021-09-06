@@ -2,6 +2,12 @@
 
 Change services.volumes in `docker-compose.yml`
 
+## Build
+
+```
+docker build -f=../Dockerfile -t cur-work .
+```
+
 ## Without systemd
 
 ```
