@@ -9,6 +9,7 @@ Afterwards [a REST server](https://github.com/eugercek/Currency-REST-API) reads 
 At the last step [a frontend](https://github.com/eugercek/Currency-Frontend) shows data.
 
 # How to run
+
 ## One Time
 
 Change services.volumes in `docker-compose.yml`
@@ -36,3 +37,13 @@ Run `docker-setup.sh`
 ```
 
 There are also non-docker way to install but they're abandoned!
+
+# TODOs
+
+- ./src/Data/Model/Currency.cs _TODO_ This file is ugly, find a way
+- ./src/Data/Model/Currency.cs _TODO_ Remove Primary key
+- ./src/Worker.cs _TODO_ Decide should keep all files?
+- ./src/Worker.cs _TODO_ Use HTTP Client instead of Old WebClient
+- ./src/Worker.cs _TODO_ Use IFetchData IoC
+- ./src/Worker.cs _TODO_ Directly inilne file
+- ./src/Worker.cs _TODO_ Seperate business logic

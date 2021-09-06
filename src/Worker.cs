@@ -41,6 +41,9 @@ namespace CurrencyWorker
             string URL = _configuration["ParseURL"];
             string fileName = _configuration["TemporaryFile"];
 
+            // TODO Decide should keep all files?
+            // TODO Use HTTP Client instead of Old WebClient
+            // TODO Use IFetchData IoC
             using (var client = new WebClient())
             {
                 client.DownloadFile(URL, fileName);
@@ -48,8 +51,10 @@ namespace CurrencyWorker
 
             _logger.LogInformation($"Downloaded({fileName}) and wrote file");
 
+            // TODO Directly inilne file
             XElement doc = XElement.Load(fileName);
 
+            // TODO Seperate business logic
             var currencies = (from node in doc.Descendants("Currency")
                               select new Currency
                               {

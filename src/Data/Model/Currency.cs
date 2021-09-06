@@ -11,6 +11,8 @@ namespace CurrencyWorker.Data.Model
     /// </summary>
     public class Currency : CurrencyBase
     {
+        // TODO This file is ugly, find a way!
+        // TODO Remove Primary key
         public int CurrencyId { get; set; }
 
         [MaxLength(3)]
